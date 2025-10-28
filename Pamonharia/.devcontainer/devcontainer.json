@@ -1,21 +1,22 @@
+// .devcontainer/devcontainer.json
 {
-	"name": "Pamonharia (.NET e SQL Server)",
-	// Diz ao Codespaces para usar o Docker Compose para orquestrar o ambiente
-	"dockerComposeFile": "docker-compose.yml",
+  "name": "Pamonharia .NET App",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app", // Diz ao VS Code para "entrar" no container 'app'
+  "workspaceFolder": "/workspace",
 
-	// O serviço 'app' (definido no docker-compose) é onde nosso código vai rodar
-	"service": "app",
+  // Instala as extensões essenciais do VS Code dentro do container
+  "extensions": [
+    "ms-dotnettools.csharp",
+    "ms-azuretools.vscode-docker",
+    "ms-mssql.mssql" // Extensão oficial do SQL Server
+  ],
 
-	// A pasta onde o VS Code deve abrir
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  // Instala o SDK do .NET 8 (ou a versão que preferir)
+  "postCreateCommand": "dotnet --version",
 
-	// Coisas extras para instalar (extensão C# e a ferramenta de Migrations)
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"ms-dotnettools.csharp"
-			]
-		}
-	},
-	"postCreateCommand": "dotnet tool install --global dotnet-ef"
+  // Define um Dockerfile simples para o serviço 'app'
+  "build": {
+    "dockerfile": "Dockerfile"
+  }
 }

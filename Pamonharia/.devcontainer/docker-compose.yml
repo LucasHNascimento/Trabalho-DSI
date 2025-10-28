@@ -1,34 +1,21 @@
+# .devcontainer/docker-compose.yml
 version: '3.8'
-
 services:
-  # 1. O contêiner para nossa aplicação .NET
+  # Serviço principal do Codespace (será definido no devcontainer.json)
   app:
-    image: mcr.microsoft.com/devcontainers/dotnet:7.0 # Imagem base .NET 7
+    # Usaremos a imagem padrão do .NET, definida no devcontainer.json
+    build: 
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      # Monta seu código fonte dentro do contêiner
-      - ..:/workspaces/${localWorkspaceFolderBasename}:cached
-    
-    # Mantém o contêiner rodando para o VS Code se conectar
+      - ..:/workspace:cached
     command: sleep infinity
-    
-    # Diz ao nosso app para esperar o 'db' ficar pronto
-    depends_on:
-      db:
-        condition: service_healthy
 
-  # 2. O contêiner do SQL Server
+  # Nosso banco de dados SQL Server
   db:
-    image: mcr.microsoft.com/mssql/server:2022-latest # Imagem oficial do SQL Server
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
     environment:
-      # Senha forte é obrigatória
-      SA_PASSWORD: "SuaSenhaF0rte!@#" 
+      SA_PASSWORD: "Your_password123" # Mude para uma senha forte
       ACCEPT_EULA: "Y"
     ports:
-      - "1433:1433" # Expõe a porta do SQL Server
-    
-    # Verifica se o SQL Server está pronto para aceitar conexões
-    healthcheck:
-      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "SuaSenhaF0rte!@#", "-Q", "SELECT 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - "1433:1433" # Expõe a porta do SQL Server para o host (Codespace)
