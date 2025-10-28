@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # 1. O contêiner para nossa aplicação .NET
+  app:
+    image: mcr.microsoft.com/devcontainers/dotnet:7.0 # Imagem base .NET 7
+    volumes:
+      # Monta seu código fonte dentro do contêiner
+      - ..:/workspaces/${localWorkspaceFolderBasename}:cached
+    
+    # Mantém o contêiner rodando para o VS Code se conectar
+    command: sleep infinity
+    
+    # Diz ao nosso app para esperar o 'db' ficar pronto
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # 2. O contêiner do SQL Server
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest # Imagem oficial do SQL Server
+    environment:
+      # Senha forte é obrigatória
+      SA_PASSWORD: "SuaSenhaF0rte!@#" 
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433" # Expõe a porta do SQL Server
+    
+    # Verifica se o SQL Server está pronto para aceitar conexões
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "SuaSenhaF0rte!@#", "-Q", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

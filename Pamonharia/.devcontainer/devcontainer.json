@@ -1,0 +1,21 @@
+{
+	"name": "Pamonharia (.NET e SQL Server)",
+	// Diz ao Codespaces para usar o Docker Compose para orquestrar o ambiente
+	"dockerComposeFile": "docker-compose.yml",
+
+	// O serviço 'app' (definido no docker-compose) é onde nosso código vai rodar
+	"service": "app",
+
+	// A pasta onde o VS Code deve abrir
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+	// Coisas extras para instalar (extensão C# e a ferramenta de Migrations)
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-dotnettools.csharp"
+			]
+		}
+	},
+	"postCreateCommand": "dotnet tool install --global dotnet-ef"
+}
