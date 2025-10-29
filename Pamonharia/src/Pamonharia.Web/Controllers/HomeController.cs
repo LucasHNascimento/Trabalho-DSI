@@ -1,31 +1,38 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Pamonharia.Application.Interfaces; // 1. Referência à camada de Aplicação
 using Pamonharia.Web.Models;
+using System.Diagnostics;
 
-namespace Pamonharia.Web.Controllers;
-
-public class HomeController : Controller
+namespace Pamonharia.Web.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        // 2. Campo para o serviço
+        private readonly IPamonhaService _pamonhaService;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        // 3. Injeção de Dependência (DI) via construtor
+        public HomeController(IPamonhaService pamonhaService)
+        {
+            _pamonhaService = pamonhaService;
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        // 4. Ação Index agora busca dados
+        public async Task<IActionResult> Index()
+        {
+            // 5. Chama a camada de Aplicação, que chama a de Infra, que chama a de Domínio
+            var cardapio = await _pamonhaService.GetAllAsync();
+            return View(cardapio); // 6. Envia os ViewModels para a View
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Pamonharia.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3d4a892e04e32ff7b416a172ea003e203cfe21ee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd84d90af4a9ef2f362691338eb188c655db7fd7")]
 [assembly: System.Reflection.AssemblyProductAttribute("Pamonharia.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Pamonharia.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

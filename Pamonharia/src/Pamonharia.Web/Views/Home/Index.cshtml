@@ -1,8 +1,45 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Pamonharia.Application.ViewModels.PamonhaViewModel>
+@{
+    ViewData["Title"] = "Pamonharia do Milho Dourado";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    <p class="lead">As melhores pamonhas da região, feitas com milho fresco!</p>
+</div>
+
+<hr />
+
+<h2>Nosso Cardápio</h2>
+
+<div class="row">
+    @if (Model.Any())
+    {
+        @foreach (var pamonha in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Pamonha de @pamonha.Sabor</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@pamonha.Preco.ToString("C")</h6>
+                        <p class="card-text">
+                            Produzida em: @pamonha.DataProducao.ToShortDateString()
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col">
+            <p>Nenhuma pamonha cadastrada no momento. Volte mais tarde!</p>
+        </div>
+    }
+</div>
+
+<div class="text-center mt-4">
+    <a asp-controller="Pamonhas" asp-action="Index" class="btn btn-secondary">
+        Ir para Gerenciamento (CRUD)
+    </a>
 </div>
