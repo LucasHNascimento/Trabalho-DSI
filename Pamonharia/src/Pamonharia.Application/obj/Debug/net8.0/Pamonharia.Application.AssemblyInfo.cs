@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Pamonharia.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2c525e7feebf804e3ab36d9af993f29c9497795e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3d4a892e04e32ff7b416a172ea003e203cfe21ee")]
 [assembly: System.Reflection.AssemblyProductAttribute("Pamonharia.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Pamonharia.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,22 +1,20 @@
-// .devcontainer/devcontainer.json
 {
   "name": "Pamonharia .NET App",
+
+  // Diz ao Codespaces para usar este arquivo para orquestrar os containers
   "dockerComposeFile": "docker-compose.yml",
-  "service": "app", // Diz ao VS Code para "entrar" no container 'app'
+
+  // Diz ao VS Code para se "conectar" ao serviço 'app' de dentro do compose
+  "service": "app",
   "workspaceFolder": "/workspace",
 
   // Instala as extensões essenciais do VS Code dentro do container
   "extensions": [
     "ms-dotnettools.csharp",
     "ms-azuretools.vscode-docker",
-    "ms-mssql.mssql" // Extensão oficial do SQL Server
+    "ms-mssql.mssql"
   ],
 
-  // Instala o SDK do .NET 8 (ou a versão que preferir)
-  "postCreateCommand": "dotnet --version",
-
-  // Define um Dockerfile simples para o serviço 'app'
-  "build": {
-    "dockerfile": "Dockerfile"
-  }
+  // Comando para rodar após o container ser criado (apenas para verificação)
+  "postCreateCommand": "dotnet --version"
 }
