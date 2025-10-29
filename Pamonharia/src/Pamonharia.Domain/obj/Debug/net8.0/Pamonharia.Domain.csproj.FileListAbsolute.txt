@@ -1,0 +1,12 @@
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/bin/Debug/net8.0/Pamonharia.Domain.deps.json
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/bin/Debug/net8.0/Pamonharia.Domain.dll
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/bin/Debug/net8.0/Pamonharia.Domain.pdb
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/obj/Debug/net8.0/Pamonharia.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/obj/Debug/net8.0/Pamonharia.Domain.AssemblyInfoInputs.cache
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/obj/Debug/net8.0/Pamonharia.Domain.AssemblyInfo.cs
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/obj/Debug/net8.0/Pamonharia.Domain.csproj.CoreCompileInputs.cache
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/obj/Debug/net8.0/Pamonharia.Domain.sourcelink.json
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/obj/Debug/net8.0/Pamonharia.Domain.dll
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/obj/Debug/net8.0/refint/Pamonharia.Domain.dll
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/obj/Debug/net8.0/Pamonharia.Domain.pdb
+/workspaces/Trabalho-DSI/Pamonharia/src/Pamonharia.Domain/obj/Debug/net8.0/ref/Pamonharia.Domain.dll
