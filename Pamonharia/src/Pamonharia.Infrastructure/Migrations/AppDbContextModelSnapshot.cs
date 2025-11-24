@@ -17,10 +17,31 @@ namespace Pamonharia.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.10")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Pamonharia.Domain.Entities.Categoria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categorias");
+                });
 
             modelBuilder.Entity("Pamonharia.Domain.Entities.Pamonha", b =>
                 {
@@ -29,6 +50,9 @@ namespace Pamonharia.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataProducao")
                         .HasColumnType("datetime2");
@@ -41,7 +65,25 @@ namespace Pamonharia.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoriaId");
+
                     b.ToTable("Pamonhas");
+                });
+
+            modelBuilder.Entity("Pamonharia.Domain.Entities.Pamonha", b =>
+                {
+                    b.HasOne("Pamonharia.Domain.Entities.Categoria", "Categoria")
+                        .WithMany("Pamonhas")
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
+                });
+
+            modelBuilder.Entity("Pamonharia.Domain.Entities.Categoria", b =>
+                {
+                    b.Navigation("Pamonhas");
                 });
 #pragma warning restore 612, 618
         }

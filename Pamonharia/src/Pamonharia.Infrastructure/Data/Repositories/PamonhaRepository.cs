@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pamonharia.Application.Interfaces;
 using Pamonharia.Domain.Entities;
+using Pamonharia.Infrastructure.Data;
 
 namespace Pamonharia.Infrastructure.Data.Repositories
 {
@@ -31,12 +32,18 @@ namespace Pamonharia.Infrastructure.Data.Repositories
 
         public async Task<IEnumerable<Pamonha>> GetAllAsync()
         {
-            return await _context.Pamonhas.AsNoTracking().ToListAsync();
+            // INCLUDE: Traz os dados da Categoria junto com a Pamonha
+            return await _context.Pamonhas
+                .Include(p => p.Categoria) 
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Pamonha?> GetByIdAsync(int id)
         {
-            return await _context.Pamonhas.FindAsync(id);
+            return await _context.Pamonhas
+                .Include(p => p.Categoria)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task UpdateAsync(Pamonha pamonha)

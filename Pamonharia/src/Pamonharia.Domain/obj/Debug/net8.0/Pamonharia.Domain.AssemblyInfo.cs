@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Pamonharia.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd84d90af4a9ef2f362691338eb188c655db7fd7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d1834433566f19defddc573024888451923f7dc9")]
 [assembly: System.Reflection.AssemblyProductAttribute("Pamonharia.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Pamonharia.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,4 +1,5 @@
 @model Pamonharia.Application.ViewModels.PamonhaViewModel
+@using Pamonharia.Domain.Enums
 
 <h2>Nova Pamonha</h2>
 <hr />
@@ -6,19 +7,29 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            
+            <div class="form-group mb-3">
                 <label asp-for="Sabor" class="control-label"></label>
-                <select asp-for="Sabor" class="form-control" asp-items="Html.GetEnumSelectList<Pamonharia.Domain.Enums.SaborPamonha>()"></select>
+                <select asp-for="Sabor" class="form-control" asp-items="Html.GetEnumSelectList<SaborPamonha>()"></select>
                 <span asp-validation-for="Sabor" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+            <div class="form-group mb-3">
+                <label asp-for="CategoriaId" class="control-label">Categoria</label>
+                <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.Categorias">
+                    <option value="">Selecione...</option>
+                </select>
+                <span asp-validation-for="CategoriaId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
                 <label asp-for="Preco" class="control-label"></label>
                 <input asp-for="Preco" class="form-control" />
                 <span asp-validation-for="Preco" class="text-danger"></span>
             </div>
-            <div class="form-group mt-2">
-                <input type="submit" value="Criar" class="btn btn-primary" />
-            </div>
+            
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a asp-action="Index" class="btn btn-secondary">Voltar</a>
         </form>
     </div>
 </div>

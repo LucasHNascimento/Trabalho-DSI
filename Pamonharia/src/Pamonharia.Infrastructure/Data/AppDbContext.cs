@@ -5,21 +5,24 @@ namespace Pamonharia.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Pamonha> Pamonhas { get; set; }
+        public DbSet<Categoria> Categorias { get; set; } // Adicionado DbSet
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configurações (ex: definir Pamonha.Id como chave primária)
-            modelBuilder.Entity<Pamonha>().HasKey(p => p.Id);
+            base.OnModelCreating(modelBuilder);
 
-            // O EF Core 8+ consegue mapear propriedades privadas
-            modelBuilder.Entity<Pamonha>().Property(p => p.Sabor);
+            modelBuilder.Entity<Pamonha>().HasKey(p => p.Id);
             modelBuilder.Entity<Pamonha>().Property(p => p.Preco).HasColumnType("decimal(18,2)");
-            modelBuilder.Entity<Pamonha>().Property(p => p.DataProducao);
+
+            // Configuração do Relacionamento 1:N
+            modelBuilder.Entity<Pamonha>()
+                .HasOne(p => p.Categoria)
+                .WithMany(c => c.Pamonhas)
+                .HasForeignKey(p => p.CategoriaId)
+                .OnDelete(DeleteBehavior.Restrict); // Impede deletar categoria em uso
         }
     }
 }

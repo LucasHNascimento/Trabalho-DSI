@@ -1,0 +1,43 @@
+@model IEnumerable<Pamonharia.Application.ViewModels.PamonhaViewModel>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Sabor</th>
+            <th>Categoria</th>
+            <th>Preço</th>
+            <th>Data Produção</th>
+            <th class="text-end">Ações</th> </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td class="align-middle">@item.Sabor</td>
+                    <td class="align-middle">@item.CategoriaNome</td>
+                    <td class="align-middle">@item.Preco.ToString("C")</td>
+                    <td class="align-middle">@item.DataProducao.ToShortDateString()</td>
+                    <td class="text-end">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-secondary" title="Editar">
+                            Editar
+                        </a>
+                        
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-dark" title="Excluir">
+                            Excluir
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center text-muted py-4">
+                    Nenhuma pamonha encontrada.
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

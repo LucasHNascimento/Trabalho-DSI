@@ -1,57 +1,62 @@
+using Mapster;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Pamonharia.Application.Interfaces;
 using Pamonharia.Application.Services;
+using Pamonharia.Application.ViewModels;
+using Pamonharia.Domain.Entities;
 using Pamonharia.Infrastructure.Data;
 using Pamonharia.Infrastructure.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. ADICIONAR SERVIÇOS AO CONTAINER (INJEÇÃO DE DEPENDÊNCIA)
-
-// 1a. Configurar o DbContext (Camada de Infraestrutura)
-// Pega a string de conexão do appsettings.json
+// 1. Configurar Banco de Dados
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString,
-        // Habilita o Assembly de Migrations para o projeto de Infra
-        b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName))
-);
+        b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
 
-// 1b. Registrar nossos Serviços e Repositórios (Inversão de Controle)
-// Quando um construtor pedir 'IPamonhaService', o DI entregará uma 'PamonhaService'.
+// 2. Configurar Mapster
+var config = TypeAdapterConfig.GlobalSettings;
+// Mapeamento: Pamonha -> PamonhaViewModel (Flattening: Categoria.Nome -> CategoriaNome)
+config.NewConfig<Pamonha, PamonhaViewModel>()
+      .Map(dest => dest.CategoriaNome, src => src.Categoria.Nome);
+
+builder.Services.AddSingleton(config);
+builder.Services.AddScoped<IMapper, ServiceMapper>();
+
+// 3. Injeção de Dependência
 builder.Services.AddScoped<IPamonhaService, PamonhaService>();
-
-// Quando um construtor pedir 'IPamonhaRepository', o DI entregará um 'PamonhaRepository'.
 builder.Services.AddScoped<IPamonhaRepository, PamonhaRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>(); // Novo
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 
-// 1c. Adicionar serviços do MVC (Camada de Apresentação)
 builder.Services.AddControllersWithViews();
 
-// 2. CONSTRUIR A APLICAÇÃO
 var app = builder.Build();
 
-// 3. CONFIGURAR O PIPELINE DE REQUISIÇÕES HTTP
+// Se não houver categorias, criar uma padrão para testes
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    if (!context.Categorias.Any())
+    {
+        context.Categorias.Add(new Categoria("Tradicional", "Pamonhas clássicas"));
+        context.SaveChanges();
+    }
+}
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // O HSTS força o navegador a usar HTTPS
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // Para servir arquivos CSS, JS e imagens da pasta wwwroot
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
 
-app.UseRouting(); // Habilita o roteamento
+app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.UseAuthorization(); // Habilita autorização (não estamos usando, mas é boa prática)
-
-// Define a rota padrão do MVC
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-// 4. EXECUTAR A APLICAÇÃO
 app.Run();

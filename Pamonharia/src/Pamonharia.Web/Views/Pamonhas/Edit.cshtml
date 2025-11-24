@@ -1,40 +1,39 @@
 @model Pamonharia.Application.ViewModels.PamonhaViewModel
-@using Pamonharia.Domain.Enums; // Precisamos disso para o Enum
+@using Pamonharia.Domain.Enums
 
-@{
-    ViewData["Title"] = "Editar Pamonha";
-}
-
-<h1>@ViewData["Title"]</h1>
+<h2>Editar Pamonha</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
             <input type="hidden" asp-for="Id" />
-            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group mb-3">
                 <label asp-for="Sabor" class="control-label"></label>
                 <select asp-for="Sabor" class="form-control" asp-items="Html.GetEnumSelectList<SaborPamonha>()"></select>
                 <span asp-validation-for="Sabor" class="text-danger"></span>
             </div>
-            
+
+            <div class="form-group mb-3">
+                <label asp-for="CategoriaId" class="control-label">Categoria</label>
+                <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.Categorias"></select>
+                <span asp-validation-for="CategoriaId" class="text-danger"></span>
+            </div>
+
             <div class="form-group mb-3">
                 <label asp-for="Preco" class="control-label"></label>
                 <input asp-for="Preco" class="form-control" />
                 <span asp-validation-for="Preco" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group mb-3">
                 <label asp-for="DataProducao" class="control-label"></label>
                 <input asp-for="DataProducao" class="form-control" readonly />
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a asp-action="Index" class="btn btn-secondary">Voltar</a>
         </form>
     </div>
 </div>

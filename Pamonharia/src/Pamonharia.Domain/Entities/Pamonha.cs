@@ -9,23 +9,25 @@ namespace Pamonharia.Domain.Entities
         public decimal Preco { get; private set; }
         public DateTime DataProducao { get; private set; }
 
-        // Construtor para o EF Core
-        private Pamonha() { } 
+        // Chave Estrangeira e Propriedade de Navegação
+        public int CategoriaId { get; private set; }
+        public Categoria Categoria { get; private set; }
 
-        // Construtor para criar uma nova pamonha
-        public Pamonha(SaborPamonha sabor, decimal preco)
+        protected Pamonha() { }
+
+        public Pamonha(SaborPamonha sabor, decimal preco, int categoriaId)
         {
             Sabor = sabor;
             Preco = preco;
+            CategoriaId = categoriaId;
             DataProducao = DateTime.UtcNow;
-            // Validações de domínio (DDD) podem ir aqui
         }
 
-        // Método para atualizar a entidade
-        public void Atualizar(SaborPamonha sabor, decimal preco)
+        public void Atualizar(SaborPamonha sabor, decimal preco, int categoriaId)
         {
             Sabor = sabor;
             Preco = preco;
+            CategoriaId = categoriaId;
         }
     }
 }
